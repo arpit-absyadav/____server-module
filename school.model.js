@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 17:51:48
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-20 15:52:31
+ * @Last Modified time: 2019-02-21 01:11:08
  */
 
 const mongoose = require('mongoose');
@@ -19,7 +19,7 @@ const SchoolSchema = new Schema({
     unique: true,
     required: true
   },
-  schoolId: {
+  Id: {
     type: String,
     unique: true,
     default: Math.floor(100000 + Math.random() * 900000)
@@ -28,25 +28,30 @@ const SchoolSchema = new Schema({
   password: { type: String, required: true },
   image: { type: String, default: null },
   isOtpVerified: { type: Boolean, required: true, default: false },
-  isPaid: { type: Boolean, required: true, default: false },
   isActivated: { type: Boolean, required: true, default: true },
-  terms: { type: Boolean, required: true },
   createdAt: { type: Date, default: Date.now, required: true }
 });
 
-// Generate hash of password before saving
+/**
+ * Generate hash of password before saving
+ */
 SchoolSchema.pre('save', function(next) {
   bcrypt.genSalt(config.saltRounds, (err, salt) => {
-    // this.userId = Math.floor(100000 + Math.random() * 900000);
     bcrypt.hash(this.password, salt, (err, hash) => {
       if (!err) {
         this.password = hash;
         next();
-      } else new Error('Cant Hash the password');
+      } else next(new Error('Error while hashin password.'));
     });
   });
 });
-// Test candidate password
+
+/**
+ *  Compare password
+ * @function comparePassword : `This funtion will compare given password`
+ * @param {String} inputPassword : `Password which has passed as input`
+ * @return {} cb : `Will return the true and false`
+ */
 SchoolSchema.methods.comparePassword = function(inputPassword, cb) {
   bcrypt.compare(inputPassword, this.password, function(err, isMatch) {
     if (err) return cb(err);
