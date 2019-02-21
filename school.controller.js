@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 20:45:35
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-21 10:23:35
+ * @Last Modified time: 2019-02-21 18:03:12
  */
 var atob = require('atob');
 var redis = require('redis');
@@ -18,7 +18,7 @@ var errorParser = require('../../common/helpers/errorParser/error.parser');
  */
 exports.create = async (req, res, next) => {
   try {
-    let [err, school] = await School.createSchool(req.body);
+    let [err, school] = await School.create(req.body);
     if (!err) {
       let _school = JSON.parse(JSON.stringify(school));
       delete _school.password;

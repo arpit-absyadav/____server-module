@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 20:46:13
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-20 15:29:07
+ * @Last Modified time: 2019-02-21 18:02:33
  */
 
 const School = require('mongoose').model('School');
@@ -12,7 +12,7 @@ const handleMongooseError = require('../../common/handlers/mongoose.error.handle
  * @function : `Create  School Fn`
  * @description : `Will return result as array`
  */
-exports.createSchool = school => {
+exports.create = school => {
   try {
     const _school = new School(school);
     return new Promise((resolve, reject) => {
@@ -41,6 +41,44 @@ exports.findByEmail = email => {
   try {
     return new Promise((resolve, reject) => {
       School.findOne({ email: email, isActivated: true })
+        .then(_school => resolve([false, _school]))
+        .catch(err => resolve([err, false]));
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+/**
+ * @function : `Get School Fn`
+ * @description : `Will return result as array`
+ *
+ * @param { string } email : `will have email `
+ */
+exports.findBy_Id = _id => {
+  try {
+    return new Promise((resolve, reject) => {
+      School.findOne({ _id: _id, isActivated: true })
+        .then(_school => resolve([false, _school]))
+        .catch(err => resolve([err, false]));
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+/**
+ * @function : `Update School Fn`
+ * @description : `This will update the document.`
+ *
+ * @param { string } _id : _id is the unique id created by mongodb itself. Using this the data can be identfied.
+ * @param { object } data : data is a object with existing collection keys and values eg:`{ isActivated: true } `
+ */
+exports.update = (_id, data) => {
+  try {
+    return new Promise((resolve, reject) => {
+      School.where({ _id: _id })
+        .update({ $set: data })
         .then(_school => resolve([false, _school]))
         .catch(err => resolve([err, false]));
     });
