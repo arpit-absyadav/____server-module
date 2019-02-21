@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 20:45:35
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-20 16:16:56
+ * @Last Modified time: 2019-02-21 10:23:35
  */
 var atob = require('atob');
 var redis = require('redis');
@@ -16,7 +16,7 @@ var errorParser = require('../../common/helpers/errorParser/error.parser');
  * Create School fn: `Creating school. `
  * @description `req.body will have school data.`
  */
-exports.createSchool = async (req, res, next) => {
+exports.create = async (req, res, next) => {
   try {
     let [err, school] = await School.createSchool(req.body);
     if (!err) {

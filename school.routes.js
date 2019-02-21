@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 20:45:31
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-20 15:40:31
+ * @Last Modified time: 2019-02-21 10:23:52
  */
 var school = require('./school.controller');
 var _jwtToken = require('../../common/helpers/j_w_t/jwt.helper');
@@ -13,7 +13,7 @@ module.exports = function(app) {
   app
     .route(prefix + '/registration')
     .all(_schoolValidator.validate)
-    .post(school.createSchool);
+    .post(school.create);
 
   // Login route
   app
