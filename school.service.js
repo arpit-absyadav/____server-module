@@ -50,10 +50,11 @@ exports.findByEmail = email => {
 };
 
 /**
- * @function : `Get School Fn`
- * @description : `Will return result as array`
+ * @function : `Find by id School Fn`
+ * @description : `This will get the result matching with id.`
  *
- * @param { string } email : `will have email `
+ * @param { string } _id : _id is the unique id created by mongodb itself. Using this the data can be identfied.
+ *
  */
 exports.findBy_Id = _id => {
   try {

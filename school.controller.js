@@ -2,7 +2,7 @@
  * @Author: Arpit.Yadav
  * @Date: 2019-02-09 20:45:35
  * @Last Modified by: Arpit.Yadav
- * @Last Modified time: 2019-02-21 18:03:12
+ * @Last Modified time: 2019-02-22 14:39:58
  */
 var atob = require('atob');
 var redis = require('redis');
@@ -64,6 +64,29 @@ exports.login = async (req, res, next) => {
       });
     } else {
       res.error.NotFound('Credentials does not match !!');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Get School Data Fn: ` Get School Data`
+ * @description `req.body will have _id `
+ * @summary this funtion will get the data having same `_id` .
+ * @reference service
+ */
+exports.getSchool = async (req, res, next) => {
+  console.log(req.params);
+
+  try {
+    let [err, school] = await School.findBy_Id(req.params._id);
+    console.log(school);
+
+    if (!err) {
+      res.success.OK('Successfully got School.', school);
+    } else {
+      res.error.NotFound('School Data not found.');
     }
   } catch (error) {
     next(error);
